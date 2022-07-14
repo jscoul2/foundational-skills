@@ -63,7 +63,7 @@ Bullet points can be used with a `single dash` or a `plus sign`
 > Outcomes:
 
 -   Learn R Markdown.
-    +   Learn about Yaml heading.
+    -   Learn about Yaml heading.
     -   Learn R Markdown Syntax.
 -   Learn how to read in data.
 -   Learn to wrangle data.
@@ -123,13 +123,13 @@ this analysis:
 
 ```{r}
 #load with read_csv package
-time_spent <- read_csv("~/RProj22/foundation_labs_2022/foundation_lab_2/data/log-data.csv")
+time_spent <- read_csv("data/log-data.csv")
 ```
 
 Now let's load it with the {here} package.
 
 ```{r}
-#load with here package
+#load with here package: where I am currently working for my project
 time_spent <- read_csv(here("data", "log-data.csv"))
 
 #inspect data
@@ -153,18 +153,19 @@ glimpse(gradebook)
 
 The third data source is a self-report survey. This was data collected
 before the start of the course. The survey included ten items, each
-corresponding to one of three motivation measures: interest, utility value, and perceived competence. These were chosen for their alignment
+corresponding to one of three motivation measures: interest, utility
+value, and perceived competence. These were chosen for their alignment
 with one way to think about students' motivation, to what extent they
 expect to do well (corresponding to their perceived competence) and
 their value for what they are learning (corresponding to their interest
-and utility value). 
+and utility value).
 
 ```{r}
 #load data 3:Self-Report Survey
 survey <- read_csv(here("data", "survey.csv"))
 
 #inspect data with view - yes the "V" is capitalized
-View(survey)
+head(survey)
 ```
 
 ### b. Tidy data
@@ -179,12 +180,16 @@ time_spent %>%
            c("subject", "semester", "section"))
 
 
+
 ```
 
 ```{r}
 time_spent_2 <- time_spent %>%
   separate(course_id,
            c("subject", "semester", "section"))
+
+#"subject" "semester" "section" are new variable names
+#time_spent_2 was used to create a new name of the data frame
 
 time_spent_2
 ```
@@ -194,6 +199,7 @@ time_spent_2
 time_spent_2 <- time_spent_2 %>% 
   mutate(time_spent_hours = time_spent / 60)
 time_spent_2
+head(time_spent_2)
 ```
 
 ##### Data 2: GRADEBOOK
@@ -253,14 +259,14 @@ data_to_explore \<- full_join(joined_data, survey, by = c("student_id",
 ```{r eval = FALSE}
 # add a join with joined data and survey
 
-
 ```
-
 
 ```{r}
 #mutate to change variable class from double or numeric to character
 joined_data <- joined_data %>%
   mutate(student_id = as.character(student_id))
+# add "%>%"
+# mutate (subject=as.numeric(subject))
 
 #inspect data
 joined_data
